@@ -1,10 +1,11 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-fn main() {
+/// Returns the total calories held by each elf.
+fn get_total_calories() -> Vec<i32> {
 
-    let mut max = 0;  // maximum calories for an elf so far
-    let mut running_total = 0;  // calories for each elf
+    let mut total_calories: Vec<i32> = Vec::new();  // calories for each elf
+    let mut running_total = 0;  // tracks calories as we add up
 
     // read lines from the file one-by-one
     let file = File::open("data/day1.txt").expect("Could not open file");
@@ -18,7 +19,7 @@ fn main() {
             if running_total == 0 {
                 panic!("Did not expect zero running total");
             }
-            max = std::cmp::max(max, running_total);
+            total_calories.push(running_total);
             running_total = 0;
         } else {
             // parse line
@@ -27,9 +28,21 @@ fn main() {
         }
     }
 
-    // at end of file, do final check
-    max = std::cmp::max(max, running_total);
+    // at end of file, append final running total
+    total_calories.push(running_total);
 
-    println!("Max calories: {}", max);
+    return total_calories;
+
+}
+
+fn main() {
+
+    let mut total_calories = get_total_calories();
+
+    // sort the calories; the last element is the max
+    total_calories.sort();
+
+    println!("Max calories: {}", total_calories.last().unwrap());
+    println!("Sum of top three calories: {}", total_calories.iter().rev().take(3).sum::<i32>());
 
 }
