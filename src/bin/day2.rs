@@ -18,10 +18,25 @@ fn parse_opponent_shape(line: &String) -> Shape {
 }
 
 fn parse_player_shape(line: &String) -> Shape {
+
+    // player shape is based on the opponent's shape
+    let opponent_shape = parse_opponent_shape(&line);
+
     return match line.chars().nth(2) {
-        Some('X') => Shape::Rock,
-        Some('Y') => Shape::Paper,
-        Some('Z') => Shape::Scissors,
+        // need to lose
+        Some('X') => match opponent_shape {
+            Shape::Rock => Shape::Scissors,
+            Shape::Paper => Shape::Rock,
+            Shape::Scissors => Shape::Paper,
+        },
+        // need to tie
+        Some('Y') => opponent_shape,
+        // need to win
+        Some('Z') => match opponent_shape {
+            Shape::Rock => Shape::Paper,
+            Shape::Paper => Shape::Scissors,
+            Shape::Scissors => Shape::Rock,
+        },
         _ => panic!("Unexpected shape: {}", line),
     };
 }
