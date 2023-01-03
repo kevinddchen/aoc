@@ -18,7 +18,6 @@ fn parse_opponent_shape(line: &String) -> Shape {
 }
 
 fn parse_player_shape(line: &String) -> Shape {
-
     // player shape is based on the opponent's shape
     let opponent_shape = parse_opponent_shape(&line);
 
@@ -58,7 +57,6 @@ fn shape_score(shape: Shape) -> i32 {
 }
 
 fn main() {
-
     let mut total_score = 0;
 
     // read lines from the file one-by-one
@@ -70,7 +68,7 @@ fn main() {
 
         let opponent_shape = parse_opponent_shape(&line);
         let player_shape = parse_player_shape(&line);
-        
+
         // compute score for win/lose/tie
         if opponent_shape == player_shape {
             total_score += 3;
@@ -83,5 +81,4 @@ fn main() {
     }
 
     println!("Total score: {}", total_score);
-
 }

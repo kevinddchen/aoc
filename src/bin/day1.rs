@@ -3,9 +3,8 @@ use std::io::{BufRead, BufReader};
 
 /// Returns the total calories held by each elf.
 fn get_total_calories() -> Vec<i32> {
-
-    let mut total_calories: Vec<i32> = Vec::new();  // calories for each elf
-    let mut running_total = 0;  // tracks calories as we add up
+    let mut total_calories: Vec<i32> = Vec::new(); // calories for each elf
+    let mut running_total = 0; // tracks calories as we add up
 
     // read lines from the file one-by-one
     let file = File::open("data/day1.txt").expect("Could not open file");
@@ -13,7 +12,7 @@ fn get_total_calories() -> Vec<i32> {
 
     for line in reader.lines() {
         let line = line.expect("Could not read line");
-        
+
         if line.len() == 0 {
             // encountered newline
             if running_total == 0 {
@@ -32,17 +31,17 @@ fn get_total_calories() -> Vec<i32> {
     total_calories.push(running_total);
 
     return total_calories;
-
 }
 
 fn main() {
-
     let mut total_calories = get_total_calories();
 
     // sort the calories; the last element is the max
     total_calories.sort();
 
     println!("Max calories: {}", total_calories.last().unwrap());
-    println!("Sum of top three calories: {}", total_calories.iter().rev().take(3).sum::<i32>());
-
+    println!(
+        "Sum of top three calories: {}",
+        total_calories.iter().rev().take(3).sum::<i32>()
+    );
 }
