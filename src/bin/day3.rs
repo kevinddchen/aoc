@@ -32,7 +32,8 @@ fn get_priority(c: char) -> i32 {
     }
 }
 
-fn main() {
+/// Solve first half of the puzzle
+fn error_total_priority() -> i32 {
     let mut total_priority = 0;
 
     // read lines from the file one-by-one
@@ -46,5 +47,52 @@ fn main() {
         total_priority += get_priority(error);
     }
 
-    println!("Total priority: {}", total_priority);
+    return total_priority;
+}
+
+/// Solve second half of the puzzle
+fn badge_total_priority() -> i32 {
+    let mut total_priority = 0;
+
+    // read lines from the file one-by-one
+    let file = File::open("data/day3.txt").expect("Could not open file");
+    let reader = BufReader::new(file);
+
+    let mut all_items: HashSet<char> = HashSet::new();
+
+    for (i, line) in reader.lines().enumerate() {
+        let line = line.expect("Could not read line");
+
+        if i % 3 == 0 {
+            // first line of a group
+            all_items = HashSet::new();
+            for c in line.chars() {
+                all_items.insert(c);
+            }
+        } else {
+            // subsequent line of a group
+            let mut new_items: HashSet<char> = HashSet::new();
+            for c in line.chars() {
+                if all_items.contains(&c) {
+                    new_items.insert(c);
+                }
+            }
+            all_items = new_items;
+        }
+
+        if i % 3 == 2 {
+            // last line of a group
+            assert!(all_items.len() == 1);
+            for c in all_items.iter() {
+                total_priority += get_priority(*c);
+            }
+        }
+    }
+
+    return total_priority;
+}
+
+fn main() {
+    println!("Error total priority: {}", error_total_priority());
+    println!("Badge total priority: {}", badge_total_priority());
 }
