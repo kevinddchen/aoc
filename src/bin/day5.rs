@@ -36,8 +36,8 @@ fn print_stack_tops(stacks: &[Vec<char>; 9]) {
 fn parse_move(line: &String) -> Move {
     let parts: Vec<&str> = line.split(' ').collect();
     let num: i32 = parts[1].parse().expect("Could not parse num");
-    let source: usize = parts[3].parse().expect("Could not parse source");
-    let dest: usize = parts[5].parse().expect("Could not parse dest");
+    let source: usize = parts[3].parse::<usize>().expect("Could not parse source") - 1;
+    let dest: usize = parts[5].parse::<usize>().expect("Could not parse dest") - 1;
     return Move {
         num,
         source,
@@ -45,11 +45,25 @@ fn parse_move(line: &String) -> Move {
     };
 }
 
+
+// NOTE: uncomment this function to solve part 1
+// fn execute_move(m: &Move, stacks: &mut [Vec<char>; 9]) {
+//     for _ in 0..m.num {
+//         let c = stacks[m.source].pop().expect("Could not pop from source");
+//         stacks[m.dest].push(c);
+//     }
+// }
+
 /// Execute the move on the stacks
 fn execute_move(m: &Move, stacks: &mut [Vec<char>; 9]) {
+    let mut buffer: Vec<char> = Vec::new();
     for _ in 0..m.num {
-        let c = stacks[m.source - 1].pop().expect("Could not pop from source");
-        stacks[m.dest - 1].push(c);
+        let c = stacks[m.source].pop().expect("Could not pop from source");
+        buffer.push(c);
+    }
+    for _ in 0..buffer.len() {
+        let c = buffer.pop().expect("Could not pop from buffer");
+        stacks[m.dest].push(c);
     }
 }
 
