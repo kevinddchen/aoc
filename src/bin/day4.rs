@@ -13,6 +13,13 @@ fn contained(a: &Assignment, b: &Assignment) -> bool {
     return a_in_b || b_in_a;
 }
 
+/// Given two assignments, determine if they overlap
+fn overlap(a: &Assignment, b: &Assignment) -> bool {
+    let a_before_b = a.end < b.start;
+    let b_before_a = b.end < a.start;
+    return !a_before_b && !b_before_a;
+}
+
 /// Given a string slice "123-456", parse it into an Assignment struct
 fn parse_assignment(part: &str) -> Assignment {
     let ends: Vec<&str> = part.split('-').collect();
@@ -33,7 +40,8 @@ fn parse_assignments(line: &String) -> (Assignment, Assignment) {
 }
 
 fn main() {
-    let mut count = 0;
+    let mut contained_count = 0;
+    let mut overlap_count = 0;
 
     // read lines from the file one-by-one
     let file = File::open("data/day4.txt").expect("Could not open file");
@@ -45,9 +53,13 @@ fn main() {
         // parse the line into two assignments
         let (a, b) = parse_assignments(&line);
         if contained(&a, &b) {
-            count += 1;
+            contained_count += 1;
+        }
+        if overlap(&a, &b) {
+            overlap_count += 1;
         }
     }
 
-    println!("Contained assignments: {}", count);
+    println!("Contained assignments: {}", contained_count);
+    println!("Overlapping assignments: {}", overlap_count);
 }
