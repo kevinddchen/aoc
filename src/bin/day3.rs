@@ -7,7 +7,7 @@ fn find_rucksack_error(rucksack: &String) -> char {
     // keep set of characters in the first compartment
     let mut first_compartment: HashSet<char> = HashSet::new();
 
-    assert!(rucksack.len() % 2 == 0);
+    assert!(rucksack.len() % 2 == 0, "Rucksack length is not even");
     let half_len = rucksack.len() / 2;
 
     // first compartment
@@ -83,7 +83,7 @@ fn badge_total_priority() -> i32 {
 
         if i % 3 == 2 {
             // last line of a group
-            assert!(all_items.len() == 1);
+            assert!(all_items.len() == 1, "Expected 1 item, got {}", all_items.len());
             for c in all_items.iter() {
                 total_priority += get_priority(*c);
             }
