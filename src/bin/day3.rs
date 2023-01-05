@@ -4,20 +4,21 @@ use std::io::{BufRead, BufReader};
 
 /// Finds the error character in a rucksack
 fn find_rucksack_error(rucksack: &String) -> char {
-    // keep hashset of characters in the first compartment
+    // keep set of characters in the first compartment
     let mut first_compartment: HashSet<char> = HashSet::new();
 
     assert!(rucksack.len() % 2 == 0);
-    for (i, c) in rucksack.chars().enumerate() {
-        if i < rucksack.len() / 2 {
-            // first compartment
-            first_compartment.insert(c);
-        } else {
-            // second compartment
-            if first_compartment.contains(&c) {
-                // found a match
-                return c;
-            }
+    let half_len = rucksack.len() / 2;
+
+    // first compartment
+    for c in rucksack[..half_len].chars() {
+        first_compartment.insert(c);
+    }
+
+    // look for a match in the second compartment
+    for c in rucksack[half_len..].chars() {
+        if first_compartment.contains(&c) {
+            return c;
         }
     }
     panic!("Could not find rucksack error");
@@ -93,6 +94,9 @@ fn badge_total_priority() -> i32 {
 }
 
 fn main() {
-    println!("Error total priority: {}", error_total_priority());
-    println!("Badge total priority: {}", badge_total_priority());
+    let error_total_priority = error_total_priority();
+    println!("Error total priority: {}", error_total_priority);
+
+    let badge_total_priority = badge_total_priority();
+    println!("Badge total priority: {}", badge_total_priority);
 }
