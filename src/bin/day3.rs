@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 /// Finds the error character in a rucksack
-fn find_rucksack_error(rucksack: &String) -> char {
+fn find_rucksack_error(rucksack: &str) -> char {
     // keep set of characters in the first compartment
     let mut first_compartment: HashSet<char> = HashSet::new();
 
@@ -33,7 +33,7 @@ fn get_priority(c: char) -> i32 {
     }
 }
 
-/// Solve first half of the puzzle
+/// Solve part 1 of the puzzle
 fn error_total_priority() -> i32 {
     let mut total_priority = 0;
 
@@ -51,7 +51,7 @@ fn error_total_priority() -> i32 {
     return total_priority;
 }
 
-/// Solve second half of the puzzle
+/// Solve part 2 of the puzzle
 fn badge_total_priority() -> i32 {
     let mut total_priority = 0;
 
@@ -95,8 +95,8 @@ fn badge_total_priority() -> i32 {
 
 fn main() {
     let error_total_priority = error_total_priority();
-    println!("Error total priority: {}", error_total_priority);
+    println!("Part 1: {}", error_total_priority);
 
     let badge_total_priority = badge_total_priority();
-    println!("Badge total priority: {}", badge_total_priority);
+    println!("Part 2: {}", badge_total_priority);
 }

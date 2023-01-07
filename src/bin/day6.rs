@@ -12,8 +12,8 @@ fn all_unique_chars(s: &str) -> bool {
     return true;
 }
 
-/// Given a string slice, returns index at which the first contiguous run of
-/// `size` unique characters is found
+/// Given a string slice, returns index at which the first contiguous run of `size` unique characters is found.
+/// I.e. if the output is `i`, then `s[i..i+size]` will be a contiguous run of unique characters.
 fn find_unique_run(size: usize, s: &str) -> usize {
     for i in 0..s.len() - size {
         let slice = &s[i..i + size];
@@ -32,9 +32,9 @@ fn main() {
 
     let sop_marker_index = find_unique_run(SOP_MARKER_SIZE, &datastream);
     let packet_start = sop_marker_index + SOP_MARKER_SIZE;
-    println!("Skipped characters for start-of-packet: {packet_start}");
+    println!("Part 1: {packet_start}");
 
     let som_marker_index = find_unique_run(SOM_MARKER_SIZE, &datastream[packet_start..]);
     let message_start = som_marker_index + SOM_MARKER_SIZE + packet_start;
-    println!("Skipped characters for start-of-message: {message_start}");
+    println!("Part 2: {message_start}");
 }

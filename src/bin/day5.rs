@@ -7,6 +7,7 @@ struct Move {
     dest: usize,
 }
 
+/// Hard-coded initial crate stack configuration
 fn initialize_stacks() -> [Vec<char>; 9] {
     [
         vec!['H', 'C', 'R'],
@@ -21,19 +22,21 @@ fn initialize_stacks() -> [Vec<char>; 9] {
     ]
 }
 
-fn print_stack_tops(stacks: &[Vec<char>; 9]) {
+/// Concatenates the characters at the top of each stack into a string
+fn stack_tops(stacks: &[Vec<char>; 9]) -> String {
+    let mut result = String::new();
     for stack in stacks.iter() {
         let last = match stack.last() {
             Some(last) => last,
             None => &' ',
         };
-        print!("{}", last);
+        result.push(*last);
     }
-    println!();
+    return result;
 }
 
-/// Parse move from the line "move x from y to z"
-fn parse_move(line: &String) -> Move {
+/// Parse move from a line of the file
+fn parse_move(line: &str) -> Move {
     let parts: Vec<&str> = line.split(' ').collect();
     let num: i32 = parts[1].parse().expect("Could not parse num");
     let source: usize = parts[3].parse::<usize>().expect("Could not parse source") - 1;
@@ -45,17 +48,16 @@ fn parse_move(line: &String) -> Move {
     };
 }
 
+/// Execute the move on the stacks, moving one-by-one
+fn execute_move_part1(m: &Move, stacks: &mut [Vec<char>; 9]) {
+    for _ in 0..m.num {
+        let c = stacks[m.source].pop().expect("Could not pop from source");
+        stacks[m.dest].push(c);
+    }
+}
 
-// NOTE: uncomment this function to solve part 1
-// fn execute_move(m: &Move, stacks: &mut [Vec<char>; 9]) {
-//     for _ in 0..m.num {
-//         let c = stacks[m.source].pop().expect("Could not pop from source");
-//         stacks[m.dest].push(c);
-//     }
-// }
-
-/// Execute the move on the stacks
-fn execute_move(m: &Move, stacks: &mut [Vec<char>; 9]) {
+/// Execute the move on the stacks, moving all at once
+fn execute_move_part2(m: &Move, stacks: &mut [Vec<char>; 9]) {
     let mut buffer: Vec<char> = Vec::new();
     for _ in 0..m.num {
         let c = stacks[m.source].pop().expect("Could not pop from source");
@@ -68,7 +70,8 @@ fn execute_move(m: &Move, stacks: &mut [Vec<char>; 9]) {
 }
 
 fn main() {
-    let mut stacks = initialize_stacks();
+    let mut stacks_part1 = initialize_stacks();
+    let mut stacks_part2 = initialize_stacks();
 
     // read lines from the file one-by-one
     let file = File::open("data/day5.txt").expect("Could not open file");
@@ -78,8 +81,10 @@ fn main() {
         let line = line.expect("Could not read line");
 
         let m = parse_move(&line);
-        execute_move(&m, &mut stacks);
+        execute_move_part1(&m, &mut stacks_part1);
+        execute_move_part2(&m, &mut stacks_part2);
     }
 
-    print_stack_tops(&stacks);
+    println!("Part 1: {}", stack_tops(&stacks_part1));
+    println!("Part 2: {}", stack_tops(&stacks_part2));
 }

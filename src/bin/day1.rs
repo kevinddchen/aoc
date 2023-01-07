@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-/// Returns the calories held by each elf.
+/// Returns the calories held by each elf
 fn get_each_calories() -> Vec<i32> {
     let mut each_calories: Vec<i32> = Vec::new(); // calories for each elf
     let mut running_sum = 0; // tracks calories as we add up
@@ -37,8 +37,8 @@ fn main() {
     total_calories.sort();
 
     let max_calories = total_calories.last().unwrap();
-    println!("Max calories: {}", max_calories);
+    println!("Part 1: {}", max_calories);
 
     let top_three_sum: i32 = total_calories.iter().rev().take(3).sum();
-    println!("Sum of top three calories: {}", top_three_sum);
+    println!("Part 2: {}", top_three_sum);
 }

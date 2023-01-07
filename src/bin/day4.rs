@@ -33,7 +33,7 @@ fn parse_assignment(part: &str) -> Assignment {
 }
 
 /// Given a line "123-456,789-012", parse it into two Assignment structs
-fn parse_assignments(line: &String) -> (Assignment, Assignment) {
+fn parse_assignments(line: &str) -> (Assignment, Assignment) {
     let parts: Vec<&str> = line.split(',').collect();
     assert!(parts.len() == 2, "Could not parse parts for line: {}", line);
     return (parse_assignment(parts[0]), parse_assignment(parts[1]));
@@ -60,6 +60,6 @@ fn main() {
         }
     }
 
-    println!("Contained assignments: {}", contained_count);
-    println!("Overlapping assignments: {}", overlap_count);
+    println!("Part 1: {}", contained_count);
+    println!("Part 2: {}", overlap_count);
 }

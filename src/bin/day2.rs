@@ -8,7 +8,8 @@ enum Shape {
     Scissors,
 }
 
-fn parse_opponent_shape(line: &String) -> Shape {
+/// Parse opponent shape from a line of the file
+fn parse_opponent_shape(line: &str) -> Shape {
     match line.chars().nth(0) {
         Some('A') => Shape::Rock,
         Some('B') => Shape::Paper,
@@ -17,17 +18,18 @@ fn parse_opponent_shape(line: &String) -> Shape {
     }
 }
 
-// NOTE: uncomment this function to solve part 1
-// fn parse_player_shape(line: &String) -> Shape {
-//     match line.chars().nth(2) {
-//         Some('X') => Shape::Rock,
-//         Some('Y') => Shape::Paper,
-//         Some('Z') => Shape::Scissors,
-//         _ => panic!("Unexpected shape: {}", line),
-//     }
-// }
+/// Parse player shape from a line of the file, using part 1 logic
+fn parse_player_shape_part1(line: &str) -> Shape {
+    match line.chars().nth(2) {
+        Some('X') => Shape::Rock,
+        Some('Y') => Shape::Paper,
+        Some('Z') => Shape::Scissors,
+        _ => panic!("Unexpected shape: {}", line),
+    }
+}
 
-fn parse_player_shape(line: &String) -> Shape {
+/// Parse player shape from a line of the file, using part 2 logic
+fn parse_player_shape_part2(line: &str) -> Shape {
     // player shape is based on the opponent's shape
     let opponent_shape = parse_opponent_shape(&line);
 
@@ -50,10 +52,12 @@ fn parse_player_shape(line: &String) -> Shape {
     }
 }
 
+/// Returns true if there is a tie
 fn is_tie(opponent_shape: &Shape, player_shape: &Shape) -> bool {
     opponent_shape == player_shape
 }
 
+/// Returns true if the player wins
 fn is_player_winner(opponent_shape: &Shape, player_shape: &Shape) -> bool {
     match opponent_shape {
         Shape::Rock => player_shape == &Shape::Paper,
@@ -71,7 +75,7 @@ fn shape_score(shape: &Shape) -> i32 {
 }
 
 fn main() {
-    let mut total_score = 0;
+    let mut total_score = [0, 0]; // for both parts
 
     // read lines from the file one-by-one
     let file = File::open("data/day2.txt").expect("Could not open file");
@@ -81,18 +85,25 @@ fn main() {
         let line = line.expect("Could not read line");
 
         let opponent_shape = parse_opponent_shape(&line);
-        let player_shape = parse_player_shape(&line);
+        let player_shape = [
+            // for both parts
+            parse_player_shape_part1(&line),
+            parse_player_shape_part2(&line),
+        ];
 
-        // compute score for win/lose/tie
-        if is_tie(&opponent_shape, &player_shape) {
-            total_score += 3;
-        } else if is_player_winner(&opponent_shape, &player_shape) {
-            total_score += 6;
+        for i in 0..2 {
+            // compute score for win/lose/tie
+            if is_tie(&opponent_shape, &player_shape[i]) {
+                total_score[i] += 3;
+            } else if is_player_winner(&opponent_shape, &player_shape[i]) {
+                total_score[i] += 6;
+            }
+
+            // add shape score
+            total_score[i] += shape_score(&player_shape[i]);
         }
-
-        // add shape score
-        total_score += shape_score(&player_shape);
     }
 
-    println!("Total score: {}", total_score);
+    println!("Part 1: {}", total_score[0]);
+    println!("Part 2: {}", total_score[1]);
 }
