@@ -128,8 +128,8 @@ fn create_fs() -> (Forest<Dir>, NodeId) {
 
 // --- Part 1 -----------------------------------------------------------------
 
-/// Traverse the tree using DPS. Returns the sum of all subdirectories of `dir`
-/// whose sizes are less than `size_limit`.
+/// Traverse the tree using recursive DFS. Returns the sum of all subdirectories
+/// of `dir` whose sizes are less than `size_limit`.
 fn compute_sum_recursive(fs: &Forest<Dir>, dir: NodeId, size_limit: i32) -> i32 {
     let mut output = 0;
 
@@ -149,8 +149,8 @@ fn compute_sum_recursive(fs: &Forest<Dir>, dir: NodeId, size_limit: i32) -> i32 
 
 // --- Part 2 -----------------------------------------------------------------
 
-/// Traverses the tree using DPS. Returns the size of the smallest subdirectory
-/// of `dir` whose size is greater or equal to `target_size` (if any).
+/// Traverses the tree using recursive DFS. Returns the size of the smallest
+/// subdirectory of `dir` whose size is greater or equal to `target_size` (if any).
 fn find_size_recursive(fs: &Forest<Dir>, dir: NodeId, target_size: i32) -> Option<i32> {
     let mut output: Option<i32> = None;
 
@@ -178,6 +178,7 @@ fn find_size_recursive(fs: &Forest<Dir>, dir: NodeId, target_size: i32) -> Optio
 // ----------------------------------------------------------------------------
 
 fn main() {
+    // initialize the file system
     let (fs, root) = create_fs();
 
     let sum_sizes = compute_sum_recursive(&fs, root, 100_000);
