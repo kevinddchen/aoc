@@ -41,11 +41,7 @@ fn parse_move(line: &str) -> Move {
     let num: i32 = parts[1].parse().expect("Could not parse num");
     let source: usize = parts[3].parse::<usize>().expect("Could not parse source") - 1;
     let dest: usize = parts[5].parse::<usize>().expect("Could not parse dest") - 1;
-    return Move {
-        num,
-        source,
-        dest,
-    };
+    return Move { num, source, dest };
 }
 
 /// Execute the move on the stacks, moving one-by-one

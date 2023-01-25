@@ -132,7 +132,13 @@ fn find_max_scenic_score(height: &Vec<Vec<i32>>) -> i32 {
     let mut max_score = 0;
     for x in 0..size {
         for y in 0..size {
-            let score = compute_scenic_score(height, Vec2d { x: x as i32, y: y as i32});
+            let score = compute_scenic_score(
+                height,
+                Vec2d {
+                    x: x as i32,
+                    y: y as i32,
+                },
+            );
             if score > max_score {
                 max_score = score;
             }

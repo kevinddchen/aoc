@@ -78,7 +78,10 @@ fn parse_line_instruction(line: &str) -> LineInstruction {
             _ => panic!("Unknown instruction: {}", words[1]),
         },
         "dir" => LineInstruction::DIR(words[1].to_string()),
-        _ => LineInstruction::FILE(words[0].parse::<i32>().expect("Could not parse file size"), words[1].to_string()),
+        _ => LineInstruction::FILE(
+            words[0].parse::<i32>().expect("Could not parse file size"),
+            words[1].to_string(),
+        ),
     }
 }
 

@@ -26,9 +26,7 @@ pub struct Forest<T> {
 impl<T> Forest<T> {
     /// Creates a new forest.
     pub fn new() -> Self {
-        Self {
-            nodes: Vec::new(),
-        }
+        Self { nodes: Vec::new() }
     }
 
     /// Creates a new root node in the forest.

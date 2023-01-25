@@ -26,10 +26,7 @@ fn parse_assignment(part: &str) -> Assignment {
     assert!(ends.len() == 2, "Could not parse ends for part: {}", part);
     let start: i32 = ends[0].parse().expect("Could not parse start");
     let end: i32 = ends[1].parse().expect("Could not parse end");
-    return Assignment {
-        start,
-        end,
-    };
+    return Assignment { start, end };
 }
 
 /// Given a line "123-456,789-012", parse it into two Assignment structs
