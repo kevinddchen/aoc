@@ -58,7 +58,6 @@ fn mark_visibilities(visible: &mut Vec<Vec<bool>>, height: &Vec<Vec<i32>>, start
     }
 }
 
-#[rustfmt::skip]
 fn get_visibilities(height: &Vec<Vec<i32>>) -> Vec<Vec<bool>> {
     let size = height.len();
 
@@ -92,10 +91,63 @@ fn count_visibilities(visible: &Vec<Vec<bool>>) -> i32 {
     return count;
 }
 
+/// `start` is a point and `dir` is a vector. March along the grid in the
+/// direction of `dir`, and compute the viewing distance in that direction.
+fn compute_viewing_distance(height: &Vec<Vec<i32>>, start: Vec2d, dir: Vec2d) -> i32 {
+    let size = height.len() as i32;
+    let start_height = height[start.x as usize][start.y as usize];
+
+    let mut viewing_distance = 0;
+    let mut pos = start;
+    loop {
+        pos += dir;
+        if pos.x < 0 || pos.x >= size || pos.y < 0 || pos.y >= size {
+            break;
+        }
+        viewing_distance += 1;
+        let curr_height = height[pos.x as usize][pos.y as usize];
+        if curr_height >= start_height {
+            break;
+        }
+    }
+    return viewing_distance;
+}
+
+fn compute_scenic_score(height: &Vec<Vec<i32>>, pos: Vec2d) -> i32 {
+    const DIRECTIONS: [Vec2d; 4] = [
+        Vec2d { x: 0, y: 1 },
+        Vec2d { x: 1, y: 0 },
+        Vec2d { x: 0, y: -1 },
+        Vec2d { x: -1, y: 0 },
+    ];
+    let mut score = 1;
+    for dir in DIRECTIONS {
+        score *= compute_viewing_distance(height, pos, dir);
+    }
+    return score;
+}
+
+fn find_max_scenic_score(height: &Vec<Vec<i32>>) -> i32 {
+    let size = height.len();
+    let mut max_score = 0;
+    for x in 0..size {
+        for y in 0..size {
+            let score = compute_scenic_score(height, Vec2d { x: x as i32, y: y as i32});
+            if score > max_score {
+                max_score = score;
+            }
+        }
+    }
+    return max_score;
+}
+
 fn main() {
     let height = get_heights();
     let visible = get_visibilities(&height);
 
     let count = count_visibilities(&visible);
     println!("Part 1: {count}");
+
+    let max_score = find_max_scenic_score(&height);
+    println!("Part 2: {max_score}");
 }
