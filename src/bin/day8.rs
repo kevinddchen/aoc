@@ -1,5 +1,5 @@
+use advent_2022::vec::Vec2d;
 use std::fs;
-use std::ops::AddAssign;
 
 /// Parse heights from the input.
 fn get_heights() -> Vec<Vec<i32>> {
@@ -17,19 +17,6 @@ fn get_heights() -> Vec<Vec<i32>> {
     }
 
     return height;
-}
-
-#[derive(Copy, Clone)]
-struct Vec2d {
-    x: i32,
-    y: i32,
-}
-
-impl AddAssign for Vec2d {
-    fn add_assign(&mut self, other: Vec2d) {
-        self.x += other.x;
-        self.y += other.y;
-    }
 }
 
 fn initialize_visibilities(size: usize) -> Vec<Vec<bool>> {
@@ -54,7 +41,7 @@ fn mark_visibilities(visible: &mut Vec<Vec<bool>>, height: &Vec<Vec<i32>>, start
             highest_so_far = curr_height;
             visible[pos.x as usize][pos.y as usize] = true;
         }
-        pos += dir;
+        pos = pos + dir;
     }
 }
 
@@ -100,7 +87,7 @@ fn compute_viewing_distance(height: &Vec<Vec<i32>>, start: Vec2d, dir: Vec2d) ->
     let mut viewing_distance = 0;
     let mut pos = start;
     loop {
-        pos += dir;
+        pos = pos + dir;
         if pos.x < 0 || pos.x >= size || pos.y < 0 || pos.y >= size {
             break;
         }
