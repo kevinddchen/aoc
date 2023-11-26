@@ -1,44 +1,41 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
 /// Returns the calories held by each elf
-fn get_each_calories() -> Vec<i32> {
-    let mut each_calories: Vec<i32> = Vec::new(); // calories for each elf
-    let mut running_sum = 0; // tracks calories as we add up
+fn get_calories() -> Vec<i32> {
+    let mut calories: Vec<i32> = Vec::new(); // calories for each elf
+    let mut running_sum = 0; // running sum of calories for the current elf
 
-    // read lines from the file one-by-one
-    let file = File::open("data/day1.txt").expect("Could not open file");
-    let reader = BufReader::new(file);
+    // iterate over lines of the file
+    let contents = std::fs::read_to_string("data/day1.txt").unwrap();
 
-    for line in reader.lines() {
-        let line = line.expect("Could not read line");
-
+    for line in contents.split("\n") {
         if line.len() == 0 {
-            // encountered newline
-            each_calories.push(running_sum);
+            // encountered empty line
+            calories.push(running_sum);
             running_sum = 0;
         } else {
             // parse line
-            let calories: i32 = line.parse().expect("Could not parse line");
+            let calories: i32 = line.parse().unwrap();
             running_sum += calories;
         }
     }
 
-    // at end of file, append final running total
-    each_calories.push(running_sum);
+    // at end of file, append final running sum
+    if running_sum > 0 {
+        calories.push(running_sum);
+    }
 
-    return each_calories;
+    return calories;
 }
 
 fn main() {
-    let mut total_calories = get_each_calories();
+    let mut calories = get_calories();
 
     // sort the calories; the last element is the max
-    total_calories.sort();
+    calories.sort();
 
-    let max_calories = total_calories.last().unwrap();
-    println!("Part 1: {}", max_calories);
+    let max = calories.last().unwrap();
+    println!("Part 1: {}", max);
 
-    let top_three_sum: i32 = total_calories.iter().rev().take(3).sum();
+    let top_three = &calories[(calories.len()-3)..];
+    let top_three_sum: i32 = top_three.iter().sum();
     println!("Part 2: {}", top_three_sum);
 }
