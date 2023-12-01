@@ -55,11 +55,13 @@ fn main() {
     {
         let sum: u32 = lines.iter().map(|line| parse_calibration_value(line, false)).sum();
         println!("Part 1: {}", sum);
+        // Expected output: 54388
     }
 
     // get calibration values for Part 2
     {
         let sum: u32 = lines.iter().map(|line| parse_calibration_value(line, true)).sum();
         println!("Part 2: {}", sum);
+        // Expected output: 53515
     }
 }

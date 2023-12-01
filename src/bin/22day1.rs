@@ -1,10 +1,13 @@
+// File containing puzle data
+const DATA: &str = "data/22day1.txt";
+
 /// Returns the calories held by each elf
 fn get_calories() -> Vec<i32> {
     let mut calories: Vec<i32> = Vec::new(); // calories for each elf
     let mut running_sum = 0; // running sum of calories for the current elf
 
     // iterate over lines of the file
-    let contents = std::fs::read_to_string("data/day1.txt").unwrap();
+    let contents = std::fs::read_to_string(DATA).unwrap();
 
     for line in contents.split("\n") {
         if line.len() == 0 {
@@ -34,8 +37,10 @@ fn main() {
 
     let max = calories.last().unwrap();
     println!("Part 1: {}", max);
+    // Expected output: 71023
 
     let top_three = &calories[(calories.len()-3)..];
     let top_three_sum: i32 = top_three.iter().sum();
     println!("Part 2: {}", top_three_sum);
+    // Expected output: 206289
 }
