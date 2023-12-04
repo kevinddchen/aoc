@@ -1,4 +1,4 @@
-// File containing puzle data
+// File containing puzzle data
 const DATA: &str = "data/23day1.txt";
 
 const WORDS: [&str; 10] = [
@@ -6,7 +6,7 @@ const WORDS: [&str; 10] = [
 ];
 
 /// Given a line of text, get the (index, value) pairs for the first and last
-/// digits.
+/// digits. Eg, for "abc123def", returns ((3, 1), (5, 3)).
 fn get_first_last_digits(s: &str) -> ((usize, u32), (usize, u32)) {
     let mut index_digit_iter = s.chars().enumerate().filter(|(_, c)| c.is_digit(10)).peekable();
     let first = index_digit_iter.peek().unwrap().clone();
@@ -48,20 +48,18 @@ fn parse_calibration_value(s: &str, search_words: bool) -> u32 {
 
 fn main() {
     // get document lines
-    let document = std::fs::read_to_string(DATA).unwrap();
-    let lines: Vec<&str> = document.split("\n").collect();
+    let data = std::fs::read_to_string(DATA).unwrap();
+    let lines: Vec<&str> = data.split("\n").collect();
 
-    // get calibration values for Part 1
+    // Part 1
     {
         let sum: u32 = lines.iter().map(|line| parse_calibration_value(line, false)).sum();
-        println!("Part 1: {}", sum);
-        // Expected output: 54388
+        println!("Part 1: {}", sum); // Expected output: 54388
     }
 
-    // get calibration values for Part 2
+    // Part 2
     {
         let sum: u32 = lines.iter().map(|line| parse_calibration_value(line, true)).sum();
-        println!("Part 2: {}", sum);
-        // Expected output: 53515
+        println!("Part 2: {}", sum); // Expected output: 53515
     }
 }
