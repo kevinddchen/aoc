@@ -1,4 +1,4 @@
-use advent_2022::vec::Vec2d;
+use aoc::vec::Vec2d;
 use std::fs;
 
 /// Parse heights from the input.

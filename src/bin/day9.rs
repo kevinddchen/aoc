@@ -1,4 +1,4 @@
-use advent_2022::vec::Vec2d;
+use aoc::vec::Vec2d;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::{BufRead, BufReader};

@@ -1,4 +1,4 @@
-use advent_2022::forest::{Forest, NodeId};
+use aoc::forest::{Forest, NodeId};
 use std::fs::File as IOFile;
 use std::io::{BufRead, BufReader};
 
