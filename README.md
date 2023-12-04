@@ -1,4 +1,4 @@
-# advent_2022
+# aoc
 
 Hello!
-I am learning rust by doing AoC 2022: https://adventofcode.com/
+I am learning rust by doing Advent of Code: https://adventofcode.com/
