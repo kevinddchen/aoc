@@ -24,10 +24,9 @@ fn get_assignments() -> Vec<(Assignment, Assignment)> {
 
 /// Given a string like "123-456", parse it into an `Assignment``
 fn parse_assignment(s: &str) -> Assignment {
-    let ends: Vec<&str> = s.split('-').collect();
-    assert!(ends.len() == 2, "Could not parse ends for part: {}", s);
-    let start: i32 = ends[0].parse().unwrap();
-    let end: i32 = ends[1].parse().unwrap();
+    let mut iter = s.split('-');
+    let start: i32 = iter.next().unwrap().parse().unwrap();
+    let end: i32 = iter.next().unwrap().parse().unwrap();
     return Assignment { start, end };
 }
 

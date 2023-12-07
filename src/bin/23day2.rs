@@ -26,12 +26,9 @@ fn get_games() -> Vec<Game> {
 /// Parse the `Game` from a line of the input file
 fn parse_game(line: &str) -> Game {
     // every line has the form "Game <number>: <cubes>; <cubes>; ..."
-    let parts: Vec<&str> = line.split(":").collect();
-    if parts.len() != 2 {
-        panic!("Invalid line: {}", line);
-    }
-    let game_id = parse_game_id(parts[0]);
-    let cube_sets = parse_cube_sets(parts[1]);
+    let mut iter = line.split(":");
+    let game_id = parse_game_id(iter.next().unwrap());
+    let cube_sets = parse_cube_sets(iter.next().unwrap());
     return Game {
         id: game_id,
         cube_sets: cube_sets,

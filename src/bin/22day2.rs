@@ -73,7 +73,7 @@ fn score_round(opponent_shape: &Shape, player_shape: &Shape) -> i32 {
 
 /// Get the opponent shape and player encoded shape for each round.
 fn get_rounds() -> Vec<(Shape, EncodedShape)> {
-    let mut shapes: Vec<(Shape, EncodedShape)> = Vec::new();
+    let mut rounds: Vec<(Shape, EncodedShape)> = Vec::new();
 
     // iterate over lines of the input file
     let data = std::fs::read_to_string(DATA).unwrap();
@@ -82,10 +82,10 @@ fn get_rounds() -> Vec<(Shape, EncodedShape)> {
     for line in data.split("\n") {
         let shape = parse_shape(line.chars().nth(0).unwrap());
         let encoded_shape = parse_encoded_shape(line.chars().nth(2).unwrap());
-        shapes.push((shape, encoded_shape));
+        rounds.push((shape, encoded_shape));
     }
 
-    return shapes;
+    return rounds;
 }
 
 fn decode_part1(encoded_shape: &EncodedShape) -> Shape {
