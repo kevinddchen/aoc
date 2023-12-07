@@ -34,7 +34,7 @@ fn find_rucksack_error(rucksack: &str) -> char {
 }
 
 /// Get the priority of a character
-fn get_priority(c: char) -> i32 {
+fn priority(c: char) -> i32 {
     if c.is_lowercase() {
         return (c as i32) - ('a' as i32) + 1;
     } else {
@@ -74,7 +74,7 @@ fn main() {
         let mut total_priority = 0;
         for rucksack in &rucksacks {
             let error = find_rucksack_error(rucksack);
-            total_priority += get_priority(error);
+            total_priority += priority(error);
         }
         println!("Part 1: {}", total_priority); // Expected output: 7831
     }
@@ -92,7 +92,7 @@ fn main() {
             let second_compartment = &rucksacks[3 * i + 1];
             let third_compartment = &rucksacks[3 * i + 2];
             let badge = find_badge((first_compartment, second_compartment, third_compartment));
-            badge_total_priority += get_priority(badge);
+            badge_total_priority += priority(badge);
         }
         println!("Part 2: {}", badge_total_priority); // Expected output: 2683
     }

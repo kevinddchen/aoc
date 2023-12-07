@@ -16,8 +16,8 @@ struct CubeSet {
     blue: i32,
 }
 
-/// Parse all `Game`s from the input file
-fn parse_games() -> Vec<Game> {
+/// Get all `Game`s from the input file
+fn get_games() -> Vec<Game> {
     let data = std::fs::read_to_string(DATA).unwrap();
     let games = data.split("\n").map(|line| parse_game(line)).collect();
     return games;
@@ -98,7 +98,7 @@ fn compute_power(game: &Game) -> i32 {
 }
 
 fn main() {
-    let games = parse_games();
+    let games = get_games();
 
     // Part 1
     {
