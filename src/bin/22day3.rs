@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
-// File containing puzzle data
-const DATA: &str = "data/22day3.txt";
+/// File containing puzzle data
+const DATA: &'static str = "data/22day3.txt";
 
 /// Read rucksacks from the text file
 fn get_rucksacks() -> Vec<String> {

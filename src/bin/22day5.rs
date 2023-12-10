@@ -1,5 +1,5 @@
-// File containing puzzle data
-const DATA: &str = "data/22day5.txt";
+/// File containing puzzle data
+const DATA: &'static str = "data/22day5.txt";
 
 #[derive(Debug)]
 struct Move {

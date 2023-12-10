@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
-// File containing puzzle data
-const DATA: &str = "data/22day6.txt";
+/// File containing puzzle data
+const DATA: &'static str = "data/22day6.txt";
 
 /// Given a string slice, return true if all characters are unique
 fn all_unique_chars(s: &str) -> bool {

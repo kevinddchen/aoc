@@ -1,5 +1,5 @@
-// File containing puzzle data
-const DATA: &str = "data/23day1.txt";
+/// File containing puzzle data
+const DATA: &'static str = "data/23day1.txt";
 
 const WORDS: [&str; 10] = [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",

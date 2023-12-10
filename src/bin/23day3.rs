@@ -1,8 +1,8 @@
 use regex::Regex;
 use std::collections::HashMap;
 
-// File containing puzzle data
-const DATA: &str = "data/23day3.txt";
+/// File containing puzzle data
+const DATA: &'static str = "data/23day3.txt";
 
 /// A number in the engine, labelled by its coordinates and value. Note that a
 /// "number" may not necessary be a "part".

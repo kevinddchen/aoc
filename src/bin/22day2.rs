@@ -1,5 +1,5 @@
-// File containing puzzle data
-const DATA: &str = "data/22day2.txt";
+/// File containing puzzle data
+const DATA: &'static str = "data/22day2.txt";
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 enum Shape {

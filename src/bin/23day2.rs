@@ -1,7 +1,7 @@
 use regex::Regex;
 
-// File containing puzzle data
-const DATA: &str = "data/23day2.txt";
+/// File containing puzzle data
+const DATA: &'static str = "data/23day2.txt";
 
 #[derive(Debug)]
 struct Game {
