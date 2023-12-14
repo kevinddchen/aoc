@@ -1,19 +1,19 @@
 use aoc::vec::Vec2d;
-use std::fs;
+
+/// File containing puzzle data
+const DATA: &'static str = "data/22day8.txt";
 
 /// Parse heights from the input.
 fn get_heights() -> Vec<Vec<i32>> {
-    let raw = fs::read_to_string("data/day8.txt").expect("Could not read file");
+    let data = std::fs::read_to_string(DATA).unwrap();
 
     let mut height: Vec<Vec<i32>> = Vec::new();
-    for raw_row in raw.split('\n') {
+    for raw_row in data.split('\n') {
         let mut row: Vec<i32> = Vec::new();
         for c in raw_row.chars() {
-            row.push(c.to_digit(10).expect("Could not parse digit") as i32);
+            row.push(c.to_digit(10).unwrap() as i32);
         }
-        if !row.is_empty() {
-            height.push(row);
-        }
+        height.push(row);
     }
 
     return height;
@@ -138,9 +138,15 @@ fn main() {
     let height = get_heights();
     let visible = get_visibilities(&height);
 
-    let count = count_visibilities(&visible);
-    println!("Part 1: {count}");
+    // Part 1
+    {
+        let count = count_visibilities(&visible);
+        println!("Part 1: {count}"); // Expected output: 1662
+    }
 
-    let max_score = find_max_scenic_score(&height);
-    println!("Part 2: {max_score}");
+    // Part 2
+    {
+        let max_score = find_max_scenic_score(&height);
+        println!("Part 2: {max_score}"); // Expected output: 537600
+    }
 }
