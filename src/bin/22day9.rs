@@ -1,9 +1,10 @@
 use aoc::vec::Vec2d;
 use std::collections::HashSet;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 
-#[derive(Copy, Clone)]
+/// File containing puzzle data
+const DATA: &'static str = "data/22day9.txt";
+
+#[derive(Copy, Clone, Debug)]
 enum Motion {
     Up,
     Right,
@@ -94,14 +95,11 @@ fn get_motions() -> Vec<Motion> {
     let mut motions: Vec<Motion> = Vec::new();
 
     // read lines from the file one-by-one
-    let file = File::open("data/day9.txt").expect("Could not open file");
-    let reader = BufReader::new(file);
+    let data = std::fs::read_to_string(DATA).unwrap();
 
-    for line in reader.lines() {
-        let line = line.expect("Could not read line");
-
+    for line in data.split('\n') {
         let chars: Vec<&str> = line.split(' ').collect();
-        let steps: i32 = chars[1].parse().expect("Could not parse steps");
+        let steps: i32 = chars[1].parse().unwrap();
         let motion = match chars[0] {
             "U" => Motion::Up,
             "R" => Motion::Right,
@@ -135,11 +133,17 @@ fn count_unique_tail_positions(rope: &mut Rope, motions: &Vec<Motion>) -> i32 {
 fn main() {
     let motions = get_motions();
 
-    let mut rope = Rope::new(2);
-    let count = count_unique_tail_positions(&mut rope, &motions);
-    println!("Part 1: {}", count);
+    // Part 1
+    {
+        let mut rope = Rope::new(2);
+        let count = count_unique_tail_positions(&mut rope, &motions);
+        println!("Part 1: {}", count); // Expected output: 6384
+    }
 
-    let mut rope = Rope::new(10);
-    let count = count_unique_tail_positions(&mut rope, &motions);
-    println!("Part 2: {}", count);
+    // Part 2
+    {
+        let mut rope = Rope::new(10);
+        let count = count_unique_tail_positions(&mut rope, &motions);
+        println!("Part 2: {}", count); // Expected output: 2734
+    }
 }
